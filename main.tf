@@ -1,6 +1,6 @@
 terraform{
   backend "s3" {
-    bucket = "rugved-bucket-backend"
+    bucket = "terraformawsusecase"
     key = "backend"
     region = "eu-north-1"
   }
