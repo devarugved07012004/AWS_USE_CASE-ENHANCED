@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      # Use a recent version of Python for general scripting if needed
+      python: 3.9
+    commands:
+      # Install Terraform CLI
+      - wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+      - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+      - sudo apt update
+      - sudo apt-get install terraform
+      - terraform --version 
+  build:
+    commands:
+      - terraform init
+      - terraform plan
+      - terraform apply -input=true -auto-approve
+
+  post_build:
+    commands:
+      - echo "Terraform execution complete. Deploying static website content..."
+artifacts:
+  files:
+    - '**/*'             # Include all files and subdirectories
+  base-directory: '.'    # Specify that the current directory is the source of files
+  discard-paths: yes     # Crucial: This tells CodeBuild to discard the leading '.' path from files in the artifact.
+  # The artifact will be created as a zip by CodeBuild automatically when using 'files' and 'base-directory'.
+  # The 'name' field below is optional, but good practice.
+  name: website_artifact # This is the name of the artifact produced (e.g., website_artifact.zip)
