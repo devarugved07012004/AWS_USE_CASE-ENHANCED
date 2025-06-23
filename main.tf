@@ -2,11 +2,11 @@ terraform{
   backend "s3" {
     bucket = "terraformawsusecase"
     key = "backend"
-    region = "eu-north-1"
+    region = "us-west-2"
   }
 }
 provider "aws" {
-  region = "eu-north-1" # You can change this to your desired AWS region
+  region = "us-west-2" # You can change this to your desired AWS region
 }
 
 # Define the S3 bucket
