@@ -11,7 +11,7 @@ provider "aws" {
 
 # Define the S3 bucket
 resource "aws_s3_bucket" "my_terraform_bucket" {
-  bucket = "rugved-bucket" 
+  bucket = "rugved-bucket-2398060" 
 
   website {
     index_document = "index.html"
